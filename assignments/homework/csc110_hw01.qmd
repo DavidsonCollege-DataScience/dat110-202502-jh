@@ -21,11 +21,13 @@ This homework focuses on the basics of the `ggplot2` package for creating data v
 
 ## Setup
 
+Use the `library()` function to load the tidyverse package into your workspace:
+
 ```{r setup}
 #| label: setup
 #| output: false
 
-library(tidyverse)
+
 ```
 
 ## Question 1
