@@ -1,0 +1,171 @@
+---
+title: Homework 1
+subtitle: CSC 110 - Data Science & Society
+author: Prof. Pete Benbow
+format: html
+---
+
+# Introduction
+
+This homework focuses on the basics of the `ggplot2` package for creating data visualizations in R, based on Chapter 1 of *R for Data Science (2nd edition)*. It should also give you some practice with creating new Quarto documents, rendering them, and submitting your assignment to Gradescope.
+
+## Guidance
+
+- Add code blocks under each question heading, and label each code block according to the question it corresponds to. This makes it easier to find and debug errors when they occur.
+
+- If a question asks you to provide both code and a written response, write your non-code answers BELOW your code blocks.
+
+- **Pay close attention** to the instructions! This will ensure that the course autograder is able to validate your test cases successfully!
+
+# Assignment
+
+## Setup
+
+```{r setup}
+#| label: setup
+#| output: false
+
+library(tidyverse)
+```
+
+## Question 1
+
+Use the `glimpse()` function to preview the `mpg` dataset, and use the assignment operator (`<-`) to save the output to a new data frame named `Q1`. How many observations are in the dataset? How many variables?
+
+```{r}
+#| label: Question 1
+
+
+```
+
+---
+
+## Question 2
+
+Create a scatterplot named `Q2` using the `mpg` dataset. Put the `displ` variable on the X axis and the `hwy` variable on the Y axis. Write a couple of sentences describing the apparent relationship between these two variables.
+
+```{r}
+#| label: Question 2
+
+
+```
+
+---
+
+## Question 3
+
+Make a new scatterplot named `Q3` with `class` on the X axis and `hwy` on the Y axis, then write a sentence or two below the visual describing the output. Does this chart display the output you expected? Why or why not?
+
+```{r}
+#| label: Question 3
+
+
+```
+
+---
+
+## Question 4
+
+Make a new scatterplot named `Q4`. Then, copying your code from Q2 (with `displ` on the X axis and `hwy` on the Y axis), add a size aesthetic that uses the `cyl` variable. Write 1-2 sentences analyzing the data visualization and what it seems to indicate about the relationship(s) between our three variables.
+
+```{r}
+#| label: Question 4
+
+
+```
+
+---
+
+## Question 5
+
+Copy-paste your code from the previous question to create a new scatterplot named `Q5`. Use the `labs()` function to add descriptive labels to your scatterplot for title, subtitle, X-axis, Y-axis, and size. Refer to the `mpg` dataset's help page by running `??mpg` in the RStudio console if you need help coming up with labels for each variable you are using.
+
+```{r}
+#| label: Question 5
+
+
+```
+
+---
+
+## Question 6
+
+Create a new scatterplot named `Q6` by copy-pasting your code from the previous question. Remove the size aesthetic from both the `ggplot()` function and the `labs()` function, then add a new layer to your plot that shows a trend line **based on a linear model**. Note how your output produces some messages above the plot, then use Quarto chunk options (Ch 28) to suppress those.
+
+:::callout-note
+If you are not familiar with lines of best fit, [this site](https://www.statisticshowto.com/line-of-best-fit/){target="blank"} offers a decent primer.
+:::
+
+```{r}
+#| label: Question 6
+
+
+```
+
+---
+
+## Question 7
+
+Create a new scatterplot named `Q7` by copy-pasting your code from the previous question. Add a color aesthetic using the `drv` variable to your `ggplot()` function and update your labels with the `labs()` function. 
+
+```{r}
+#| label: Question 7
+
+
+```
+
+---
+
+## Question 8
+
+Create a new scatterplot named `Q8` by copy-pasting your code from the previous question. Move the color aesthetic from your `ggplot()` function into your scatterplot layer. What changes do you notice in your plot resulting from moving this aesthetic?
+
+```{r}
+#| label: Question 8
+
+
+```
+
+---
+
+## Question 9
+
+Create a new scatterplot named `Q9` by copy-pasting your code from the previous question. Move the color aesthetic from your scatterplot layer into your trend line layer. What changes do you notice in your plot resulting from moving this aesthetic? What principle from the R4DS reading do the past three questions illustrate?
+
+```{r}
+#| label: Question 9
+
+
+```
+
+---
+
+## Question 10
+
+Answer the following questions:
+ 
+- Was the R4DS reading helpful for completing this assignment?
+- What was the most difficult part of this assignment for you?
+
+---
+
+\newpage
+
+# Submission
+
+Once you are finished with the assignment, render your Quarto document into PDF format, then carefully review the rendered assignment against this checklist to ensure you have done everything appropriately.
+
+- [ ] Correct author is listed in the YAML header
+- [ ] All code is clearly visible on questions that require it
+- [ ] All code output is clearly visible (does not apply to the Setup section)
+- [ ] All empty or redundant code blocks and visuals are removed
+- [ ] Your written responses to questions are written under the appropriate section headers
+
+When ready, submit your assignment to Gradescope:
+
+- [ ] Upload the rendered PDF under the appropriate assignment
+- [ ] Assign pages to each question in the assignment outline
+
+(For help with Gradescope submissions, check out the YouTube video on the Course FAQ page.)
+
+---
