@@ -1,0 +1,216 @@
+---
+title: Homework 2
+subtitle: CSC 110 - Data Science & Society
+format:
+  html:
+    fig-width: 8
+    fig-height: 4
+---
+
+# Introduction
+
+This homework allows you to practice more `ggplot2` visualization methods, based on Chapter 1 of *R for Data Science (2nd edition)*.
+
+## Guidance
+
+- Add code blocks under each question heading, and label each code block according to the question it corresponds to. This makes it easier to find and debug errors when they occur.
+
+- If a question asks you to provide both code and a written response, write your non-code answers BELOW your code blocks.
+
+- **Pay close attention** to the instructions! This will ensure that the course autograder is able to validate your test cases successfully!
+
+# Assignment
+
+## Setup
+
+Run the setup block below to load the data for this homework. When you're done, use the tools in RStudio to examine the dataset.
+
+This data comes to us from the World Bank, specifically from their World Development Indicators database. We're retrieving two variables from the year 2020, `gdp_per_capita` and `life_expectancy`, which we can use to compare countries and regions across the globe.
+
+```{r setup}
+#| label: setup
+#| output: false
+
+library(tidyverse)
+library(WDI)
+
+worldbank <- WDI(
+  country = "all",
+  indicator = c(
+    'gdp_per_capita' = "NY.GDP.PCAP.KD", 
+    'life_expectancy' = "SP.DYN.LE00.IN"
+  ),
+  start = 2020,
+  end = 2020,
+  extra = TRUE,
+  cache = NULL,
+  latest = NULL,
+  language = "en"
+) |> filter(region != "Aggregates")
+```
+
+---
+
+## Question 1
+
+Use the `worldbank` dataset to create a bar chart named `Q1` that shows the count of countries in each region of the world. Add descriptive labels using the `labs()` function, including an appropriate title, caption, X axis, and Y axis. Below your visual, explain in 1-2 sentences why a bar chart is an appropriate geom for the region variable.
+
+```{r}
+#| label: Question-1
+
+
+```
+
+Bar charts are appropriate for this data because Region is a categorical variable.
+
+---
+
+## Question 2
+
+Create a histogram named `Q2` that shows the distribution of the life expectancy variable across all countries. Remember to add descriptive labels for title, subtitle, X axis, and Y axis. Experiment with adjusting the sizes of the histogram bins and take note of how that changes the appearance of the histogram.
+
+::: callout-note
+Although you only need to map a single variable to your chart axis here, you can still add descriptive labels to both X and Y axes. This is highly recommended so your audience can better understand what the data in the chart represents!
+:::
+
+```{r}
+#| label: Question-2
+
+
+```
+
+---
+
+## Question 3
+
+Create a new `Q3` plot by copy-pasting your code from Q2, but this time create a density plot instead of a histogram. In 1-2 sentences, how does the appearance of the density plot differ from that of the histogram? 
+
+```{r}
+#| label: Question-3
+
+
+```
+
+The density plot changes the scale of the Y axis because of how it calculates density within the dataset, as opposed to simply counting unique observations within each bin as a histogram does. It also provides a smoother, less jagged visual that still roughly conveys the distribution of our chosen variable, albeit with less precision.
+
+---
+
+## Question 4
+
+Create a boxplot named `Q4` that puts the life expectancy variable on the X axis and the region variable on the Y axis. Add title, caption, and X/Y axis labels. In 1-2 sentences, what insights can you gather from this plot? Also, why did I ask you to put region on the Y axis instead of the X axis?
+
+```{r}
+#| label: Question-4
+
+
+```
+
+Sub-Saharan Africa has the widest distrbution of life expectancies, with outliers on both the low and high ends of the distribution. The rest of the world has much higher life expectancy values on average, but all regions have pretty wide variability except for North America, which contains only three countries.
+
+If we put the region variable on the X axis, the labels for our region names will overlap and become harder to read. Putting region on the Y axis fixes this issue. (Another way to solve this is to rotate the X axis labels using something a new `theme()` layer, like this: `theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))`)
+
+---
+
+## Question 5
+
+Create a bar chart named `Q5` that visualizes the relationship between region and income. To do so, put region on the Y axis and income on the fill aesthetic. Add title, caption, and X/Y axis labels. In 1-2 sentences, summarize a few key insights you can glean from this chart.
+
+```{r}
+#| label: Question-5
+
+
+```
+
+This chart shows us a very high concentration of low-income countries in Africa and the Middle East. Meanwhile, all of North America's countries are considered high-income.
+
+---
+
+## Question 6
+
+Create a new `Q6` plot by copy-pasting your code from Q5. This time, modify your bar chart in such a way that each bar visualizes **proportions** instead of counts. Roughly what percentage of countries in the "East Asia & Pacific" region are considered upper-middle income? 
+
+```{r}
+#| label: Question-6
+
+
+```
+
+Roughly 25% of countries in the East Asia & Pacific region are considered to be upper-middle income according to the World Bank's metrics.
+
+---
+
+## Question 7
+
+Create a histogram named `Q7` that shows the distribution of our life expectancy variable, but this time **facet** the chart by region. Add descriptive labels where needed. Finally, in 1-2 sentences, describe what advantages (and disadvantages) faceting might have when compared to the previous charts, particularly the boxplot.
+
+```{r}
+#| label: Question-7
+#| message: false
+
+
+```
+
+Compared to the boxplot, the faceted histogram makes it easier to see how many observations are present in each category. However, the boxplot does a better job summarizing the distribution of the data through its box-and-whisker style, allowing you to easily find medians, quartiles, and outliers.
+
+---
+
+## Question 8
+
+Create a scatterplot named `Q8` with GDP per capita on the X axis and life expectancy on the Y axis. Add a trend line visual on top of the scatterplot using the default ("loess") method. What can you potentially infer about the relationship between these two variables based on the distribution of points in the plot and the shape of our trend line? Think carefully!
+
+```{r}
+#| label: Question-8
+#| warning: false
+#| message: false
+
+
+```
+
+The plot looks remarkably like a Pareto distribution, or a "heavy-tailed" distribution. Putting it more plainly, a small percentage of countries have both high life expectancy and high GDP per capita, which highlights disparities in economic development and health outcomes across the globe. It also indicates a **non-linear relationship** between the two variables. While initial increases in GDP per capita seem to influence life expectancy, we see evidence of diminishing returns as GDP per capita increases. As one can probably imagine, this is due to the fact that you can't cheat cellular decay and everybody dies eventually, no matter how much money you throw at the problem.
+
+::: callout-note
+You can transform the X axis to use a logarithmic scale with the function `scale_x_log10()`. This will allow us to see how **relative changes** GDP per capita influence life expectancy, as opposed to **absolute changes**. Furthermore, this has the effect of straightening out our trend line, showing us a **linear relationship**. In other words: relative changes in GDP per capita exhibit a positive linear effect on life expectancy. 
+:::
+
+---
+
+## Question 9
+
+Create a new plot named `Q9` by copy-pasting your code from Q8 and use `facet_wrap()` to break down the scatterplot by income. What insights can you gather from this faceted scatterplot that might not have been as evident in the Q8 scatterplot?
+
+::: callout-tip
+The `facet_wrap()` function has an optional argument: `scales`. Search the documentation in RStudio to see if you can figure out how to use it to adjust the appearance of your facets to make them easier to interpret!
+:::
+
+```{r}
+#| label: Question-9
+#| warning: false
+
+
+```
+
+This visual riffs on the previous by breaking down the data by region, allowing us to see the tight concentrations of GDP per capita values in all groups except the "High income" cohort. This seems to indicate some relationship between GDP per capita and these categories that the World Bank has assigned, but it's difficult to discern. Moreover, this view allows us to see with a little more clarity the "diminishing returns" phenomenon noted earlier, where we see life expectancy inching higher as we look from low to lower-middle to upper-middle.
+
+---
+
+## Question 10 (Reflection)
+
+Using Markdown headings, add a new section to your document named "Q10" and answer the following questions:
+
+- What did you learn from this homework? 
+- Was the R4DS reading helpful for completing this assignment?
+- What was the most difficult part of this assignment for you?
+
+---
+
+# Submission
+
+Once you are finished with the assignment, carefully review your work against this checklist to ensure you have done everything appropriately.
+
+- [ ] Correct author is listed in the YAML header
+- [ ] All code is clearly visible on questions that require it
+- [ ] All code output is clearly visible (does not apply to the Setup section)
+- [ ] All empty or redundant code blocks and visuals are removed
+- [ ] Your written responses to questions are written under the appropriate section headers
+
+When ready, upload your QMD file to Gradescope so the autograder can review your work!
