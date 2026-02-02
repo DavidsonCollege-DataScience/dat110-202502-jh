@@ -61,7 +61,7 @@ Use the `worldbank` dataset to create a bar chart named `Q1` that shows the coun
 
 ```
 
-Bar charts are appropriate for this data because Region is a categorical variable.
+
 
 ---
 
@@ -91,7 +91,7 @@ Create a new `Q3` plot by copy-pasting your code from Q2, but this time create a
 
 ```
 
-The density plot changes the scale of the Y axis because of how it calculates density within the dataset, as opposed to simply counting unique observations within each bin as a histogram does. It also provides a smoother, less jagged visual that still roughly conveys the distribution of our chosen variable, albeit with less precision.
+
 
 ---
 
@@ -105,9 +105,7 @@ Create a boxplot named `Q4` that puts the life expectancy variable on the X axis
 
 ```
 
-Sub-Saharan Africa has the widest distrbution of life expectancies, with outliers on both the low and high ends of the distribution. The rest of the world has much higher life expectancy values on average, but all regions have pretty wide variability except for North America, which contains only three countries.
 
-If we put the region variable on the X axis, the labels for our region names will overlap and become harder to read. Putting region on the Y axis fixes this issue. (Another way to solve this is to rotate the X axis labels using something a new `theme()` layer, like this: `theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))`)
 
 ---
 
@@ -121,7 +119,7 @@ Create a bar chart named `Q5` that visualizes the relationship between region an
 
 ```
 
-This chart shows us a very high concentration of low-income countries in Africa and the Middle East. Meanwhile, all of North America's countries are considered high-income.
+
 
 ---
 
@@ -135,7 +133,7 @@ Create a new `Q6` plot by copy-pasting your code from Q5. This time, modify your
 
 ```
 
-Roughly 25% of countries in the East Asia & Pacific region are considered to be upper-middle income according to the World Bank's metrics.
+
 
 ---
 
@@ -150,7 +148,7 @@ Create a histogram named `Q7` that shows the distribution of our life expectancy
 
 ```
 
-Compared to the boxplot, the faceted histogram makes it easier to see how many observations are present in each category. However, the boxplot does a better job summarizing the distribution of the data through its box-and-whisker style, allowing you to easily find medians, quartiles, and outliers.
+
 
 ---
 
@@ -166,11 +164,7 @@ Create a scatterplot named `Q8` with GDP per capita on the X axis and life expec
 
 ```
 
-The plot looks remarkably like a Pareto distribution, or a "heavy-tailed" distribution. Putting it more plainly, a small percentage of countries have both high life expectancy and high GDP per capita, which highlights disparities in economic development and health outcomes across the globe. It also indicates a **non-linear relationship** between the two variables. While initial increases in GDP per capita seem to influence life expectancy, we see evidence of diminishing returns as GDP per capita increases. As one can probably imagine, this is due to the fact that you can't cheat cellular decay and everybody dies eventually, no matter how much money you throw at the problem.
 
-::: callout-note
-You can transform the X axis to use a logarithmic scale with the function `scale_x_log10()`. This will allow us to see how **relative changes** GDP per capita influence life expectancy, as opposed to **absolute changes**. Furthermore, this has the effect of straightening out our trend line, showing us a **linear relationship**. In other words: relative changes in GDP per capita exhibit a positive linear effect on life expectancy. 
-:::
 
 ---
 
@@ -189,7 +183,7 @@ The `facet_wrap()` function has an optional argument: `scales`. Search the docum
 
 ```
 
-This visual riffs on the previous by breaking down the data by region, allowing us to see the tight concentrations of GDP per capita values in all groups except the "High income" cohort. This seems to indicate some relationship between GDP per capita and these categories that the World Bank has assigned, but it's difficult to discern. Moreover, this view allows us to see with a little more clarity the "diminishing returns" phenomenon noted earlier, where we see life expectancy inching higher as we look from low to lower-middle to upper-middle.
+
 
 ---
 
