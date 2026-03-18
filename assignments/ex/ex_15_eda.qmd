@@ -1,0 +1,212 @@
+---
+title: "Exploratory data analysis"
+---
+
+# Goals for this exercise
+
+- Perform a simple EDA (Exploratory Data Analysis) on childcare facility data in Mecklenburg County, North Carolina.
+- Learn how variation and covariation analyses fit together in EDA.
+- BONUS: Learn how to use the `gt` package to create really cool summary tables!
+
+---
+
+# Setup
+
+You know the drill: load the packages and data!
+
+```{r setup, include=FALSE}
+#| label: load-packages
+#| echo: true
+#| include: true
+#| warning: false
+
+library(tidyverse)
+library(readxl)
+library(gt)
+library(gtExtras)
+```
+
+# Background
+
+The provided data on early care and education were painstakingly collected by Scott Latham and collaborators at the Stanford Center for Educational Policy Analysis, in support of a recent publication available [here](https://cepa.stanford.edu/content/effects-accountability-incentives-early-childhood-education){target="_blank"}
+
+# Exercise
+
+For this exercise, let us assume that we don't yet have a fully-formed research question, but we know we want to examine the student capacities of early childcare facilities in Mecklenburg County, NC. Our dataset contains a `capacity` variable we can investigate, so let's begin by examining its variation.
+
+First, let's create a new data frame named "nc" by reading in the data from the Excel file, then use pipes to take our nc data frame and create a new data frame named "meck14" that only contains data from Mecklenburg County for the year 2014.
+
+::: callout-important
+Filtering on year is essential here because each facility is in the dataset multiple times, once for each year. If we try to look at multiple years at once, we could erroneous results.
+:::
+
+**Do we encounter any NA values for our research variable?? If so, it might help to filter out those records!**
+
+```{r}
+#| label: load-dataset
+
+nc <- read_excel("../../data/NC_ECE_2007-2014.xlsx")
+
+meck14 <- nc |>
+  filter(county == "Mecklenburg", year == 2014)
+
+glimpse(meck14)
+```
+
+## Part 1: Exploring variation
+
+R4DS says:
+
+> "Variation is the tendency of the values of a variable to change from measurement to measurement."
+> 
+> [Source](https://r4ds.hadley.nz/EDA.html#variation){target="_blank"}
+
+Seems like a fairly straightforward definition, but this variability could have a lot of implications for our analysis of the data, so let's take a look at an example.
+
+Now that we have our data for Mecklenburg County in 2014, let's create a suitable plot to examine the variation of our capacity variable.
+
+**After plotting the data and making appropriate adjustments, what patterns emerge? What kind of distribution do we see taking shape? Are there anomalies in the data we need to account for?**
+
+```{r}
+
+```
+
+Based on the shape of our distribution, we might decide that we need to examine how other variables in our dataset might be influencing capacity. Let's pursue this by looking at some categorical variables which might help explain the variation we're seeing.
+
+In re-examining the dataset, one variable might stand out to you as promising for analysis: `ftype`, which is an abbreviation for **facility type**. Maybe the type of facility we're looking at (public school, church, independent business) might help explain differences in capacity?
+
+Let's build a quickie bar chart with labels to examine the distribution of facility types in our dataset:
+
+::: callout-tip
+To change the ordering of our Y axis so that the categories are sorted based on **frequency**, we can use the `fct_infreq()` function in our `aes()` call. See if you can figure out how this works! This might make our visual easier to read and interpret.
+:::
+
+**After creating the bar chart, what strikes you about our dataset, and what anomalies do you see that we might need to account for among facility types?**
+
+```{r}
+
+```
+
+Upon examination of the facility types, maybe we determine it makes sense to filter out some observations in our dataset, so let's do that now:
+
+```{r}
+
+```
+
+And then let's proceed onward to...
+
+---
+
+## Part 2: Exploring covariation
+
+R4DS says:
+
+> "Covariation is the tendency for the values of two or more variables to vary together in a related way. The best way to spot covariation is to visualize the relationship between two or more variables."
+> 
+> [Source](https://r4ds.hadley.nz/EDA#covariation){target="_blank"}
+
+As we learned early on in this course, **boxplots** are very well-suited for analyzing covariation when one of your variables is categorical and the other is continuous. So, let's create a boxplot to investigate the possible covariation between **facility type** and **facility capacity** in the year 2014.
+
+::: callout-tip
+Another way to change the ordering of the data on our chart axes is by calculating a summary statistic.  In particular, we can use the `fct_reorder()` function inside our `aes()` function, adding it to whatever aesthetic (x or y) we want to change the ordering of.
+:::
+
+```{r}
+
+```
+
+### Jitter plots
+
+Another interesting way to riff on that last plot is to add a **jitter plot** to it. A jitter plot looks similar to a scatter plot, but it "jitters" or nudges the points around to try to keep them from overlapping in situations where the observations are densely clustered. Adding a jitter plot layer to our boxplot gives us the best of both worlds: we can see the distribution of our facility types in terms of summary stats like median and IQR, as well as our outliers, but we can also see the individual data points, which gives us a better sense of the **size** of each category.
+
+In this next block, copy-paste your code from the previous block, then add a new layer after `geom_boxplot()` using `geom_jitter()`. Use the `color` and `alpha` aesthetics to add some visual distinctiveness to your jittered points so they stand out from the boxplots.
+
+**After adding this new goem to your boxplot, what do you observe about the concentration of facilities in the different categories? Can you determine from this combined plot where the modality of our histogram might be originating from?**
+
+```{r}
+
+```
+
+## Part 3: Wrapping up
+
+It should hopefully become obvious from this "jittered boxplot" that the facility types seem to have a relationship with facility capacities. In particular, the modality we observed earlier in our histogram of facility capacities might be explained by the different facility types.
+
+But the other thing we observe is that the "Independent" category of facility type may be over-represented in our dataset. Indeed, if we do the math, we find that Independent facilities make up **over 60%** of the early childcare facilities in Mecklenburg County. The remaining 36.1% are comprised of a mixture of public schools, churches, and even some franchise businesses (like "Tutor Time"). Some of these facility types only have one facility belonging to them!
+
+It might make sense, then, to group the non-independent facilities into a larger "roll-up" categories so we have more observations to compare against the independent facilities that make up the bulk of our dataset.
+
+::: callout-tip
+This is a great example of how EDA reveals characteristics of our data that may require additional transformation, followed by more visualization and analysis!
+:::
+
+So let's use a conditional transformation to create a new category for our data. In the next code block, pipe our `meck14` data frame into an `case_when()` mutation that classifies each facility as either Independent, Public school, or Other. Then, take the output of that mutation and create a boxplot that shows the distribution of facility capacities for these three new categories:
+
+```{r}
+
+```
+
+As a result of this boxplot, we should have a better sense of how facility capacity is related to facility type. We've examined the covariation between these two important variables and determined that regrouping them into different categories helps us see how the distributions vary, and we can use this to perform a more nuanced analysis in the next phase of our EDA.
+
+---
+
+# Bonus: gt demo
+
+Suppose we've asked the question: **How many facilities of each facility type exist in Mecklenburg County?** With this question, we're trying to get a sense of how facilities are distributed in our subject area.
+
+The visual way to do this, as we learned in [R4DS Chapter 1](https://r4ds.hadley.nz/data-visualize.html#a-categorical-variable){target="_blank"}, is to create a bar chart. But we can also get precise numbers if we build a summary table.
+
+For this exercise, let's combine the best of both worlds and use the `gt` (Great Tables) package to create a summary table that contains bar charts inside of it!
+
+Our fancy table will have:
+
+- One row per facility type
+- A count of each facility type in Mecklenburg County
+- The same count expressed as a percentage (%)
+- **A horizontal bar for each row visualizing the relative size of each category**
+
+::: callout-tip
+We create a "great table" object by invoking the `gt()` function, but the `gt` package itself contains dozens of functions for manipulating these tables. We will use several of these in the following example, so I have commented the code so you can understand what each one is doing.
+:::
+
+```{r}
+meck14 |>
+  # Pipeline code here: filter, aggregate, and arrange
+  count(ftype) |>
+  mutate(pct = n / sum(n)) |>
+  arrange(desc(n)) |>
+  
+  # Start gt code here
+  gt() |>
+  
+  # Format the pct column as percentages
+  fmt_percent(columns = pct, decimals = 1) |> 
+  
+  # Duplicate the n column so we can convert to bar
+  gt_duplicate_column(column = n, after = n, append_text = "_bar") |>
+  
+  # Add horizontal bars to each row
+  gt_plt_bar(
+    column      = n_bar,
+    keep_column = FALSE,
+    color       = "purple"
+  ) |>
+  
+  # Adjust table column widths by percentages
+  cols_width(
+    ftype ~ pct(35),
+    n     ~ pct(15),
+    pct   ~ pct(15),
+    n_bar ~ pct(35)
+  ) |>
+  
+  # Change column headers
+  cols_label(
+    ftype = "Facility Type",
+    n     = "Count",
+    n_bar = "Distribution",
+    pct   = "Percent"
+  ) |>
+  
+  # Move the bar column to the end of the table
+  cols_move_to_end(columns = n_bar)
+```
