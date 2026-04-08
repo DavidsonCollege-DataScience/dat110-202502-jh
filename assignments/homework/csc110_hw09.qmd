@@ -22,6 +22,15 @@ Run the setup block below to load the packages you need.
 - `tmap` gives us spatial mapping capabilities
 - `tigris` provides some additional functions to working with TIGER shape files
 
+```{r setup}
+#| label: load-packages
+#| output: false
+
+library(tidyverse)
+library(tidycensus)
+library(tmap)
+library(tigris)
+```
 
 ## Exercises
 
