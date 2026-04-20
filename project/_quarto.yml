@@ -13,7 +13,7 @@ website:
         text: "EDA"
       - 03_presentation.qmd
       - href: 04_report.qmd
-        title: "Report"
+        text: "Report"
       - text: "Authors"
         menu:
           - jane.qmd
