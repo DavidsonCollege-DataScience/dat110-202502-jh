@@ -1,0 +1,31 @@
+project:
+  type: website
+
+website:
+  title: "My Fancy Project"
+  search: false
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - 01_rq.qmd
+      - href: 02_eda.qmd
+        text: "EDA"
+      - 03_presentation.qmd
+      - href: 04_report.qmd
+        title: "Report"
+      - text: "Authors"
+        menu:
+          - jane.qmd
+          - john.qmd
+
+format:
+  html:
+    theme:
+      - cosmo
+      - brand
+    css: styles.css
+    toc: true
+
+
+

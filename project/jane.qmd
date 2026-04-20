@@ -1,0 +1,16 @@
+---
+title: "Jane Doe"
+image: /images/avatar_female.png
+about: 
+  template: trestles
+  image-shape: round
+  links:
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/
+      target: _blank
+---
+
+::: callout-important
+To customize your About page, [check out the documentation here](https://quarto.org/docs/websites/website-about.html){target="_blank"}... and remember to remove this callout box BEFORE publishing your site at the end of the semester!
+:::

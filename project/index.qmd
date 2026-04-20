@@ -1,0 +1,34 @@
+---
+title: "My Fancy Project"
+toc: false
+listing:
+  - id: page-listing
+    contents:
+      - "*.qmd"
+      - "!jane.qmd"
+      - "!john.qmd"
+    type: grid
+    sort: false
+    grid-columns: 2
+    fields: [image, title]
+  - id: authors-listing
+    contents:
+      - "jane.qmd"
+      - "john.qmd"
+    type: grid
+    grid-columns: 2
+    image-height: "300px"
+    fields: [image, title]
+---
+
+::: callout-important
+For some inspiration on how to customize your site, [check out the gallery here](https://quarto.org/docs/gallery/#websites){target="_blank"}... and remember to remove this callout box BEFORE publishing your site at the end of the semester!
+:::
+
+::: {#page-listing}
+:::  
+
+## Authors
+
+::: {#authors-listing}
+:::  
